@@ -63,15 +63,3 @@ Google Drive link -
 
 
 
-# Contact Information
-
-
-E mail - rivithushara@gmail.com
-
-Whatsapp - +94 77 920 8997
-
-
-
-The Source Code file and All the need documents can refere [here] - 
-
-
