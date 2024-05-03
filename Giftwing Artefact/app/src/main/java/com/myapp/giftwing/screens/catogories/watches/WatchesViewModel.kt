@@ -1,0 +1,88 @@
+package com.myapp.giftwing.screens.catogries.watches
+
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.myapp.giftwing.models.Advertisement
+import com.myapp.giftwing.models.Manufacturer
+import com.myapp.giftwing.repositories.BrandsRepository
+import com.myapp.giftwing.sealed.DataResponse
+import com.myapp.giftwing.sealed.AllError
+import com.myapp.giftwing.sealed.UiState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+
+@HiltViewModel
+class WatchesViewModel @Inject constructor(
+    private val brandsRepository: BrandsRepository,
+): ViewModel() {
+    val searchQuery = mutableStateOf("")
+
+    val homeAdvertisementsUiState = mutableStateOf<UiState>(UiState.Success)
+    val advertisements: MutableList<Advertisement> = mutableStateListOf()
+
+    val brandsUiState = mutableStateOf<UiState>(UiState.Loading)
+    val brands: MutableList<Manufacturer> = mutableStateListOf()
+
+    val currentSelectedBrandIndex = mutableStateOf(0)
+
+    fun updateCurrentSelectedBrandId(index: Int) {
+        currentSelectedBrandIndex.value = index
+    }
+
+    fun updateSearchInputValue(value: String) {
+        this.searchQuery.value = value
+    }
+
+    fun getHomeAdvertisements() {
+        if (advertisements.isNotEmpty()) return
+
+        /** start loading */
+        homeAdvertisementsUiState.value = UiState.Loading
+        viewModelScope.launch {
+            brandsRepository.getBrandsAdvertisements().let {
+                when (it) {
+                    is DataResponse.Success -> {
+                        /** Got a response from the server successfully */
+                        homeAdvertisementsUiState.value = UiState.Success
+                        it.data?.let { responseAds ->
+                            advertisements.addAll(responseAds)
+                        }
+                    }
+                    is DataResponse.Error -> {
+                        /** An error happened when fetching data from the server */
+                        homeAdvertisementsUiState.value =
+                            UiState.Error(error = it.allError ?: AllError.Network)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getBrandsWithProducts() {
+        if (brands.isNotEmpty()) return
+
+        /** start loading */
+        brandsUiState.value = UiState.Loading
+        viewModelScope.launch {
+            brandsRepository.getBrandsWithProducts().let {
+                when (it) {
+                    is DataResponse.Success -> {
+                        /** Got a response from the server successfully */
+                        brandsUiState.value = UiState.Success
+                        it.data?.let { responseBrands ->
+                            brands.addAll(responseBrands)
+                        }
+                    }
+                    is DataResponse.Error -> {
+                        /** An error happened when fetching data from the server */
+                        brandsUiState.value = UiState.Error(error = it.allError ?: AllError.Network)
+                    }
+                }
+            }
+        }
+    }
+}

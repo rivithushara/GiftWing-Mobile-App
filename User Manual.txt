@@ -1,0 +1,26 @@
+User Manual for the GiftWing Mobbile Application:
+
+
+1. Download and install the app.
+
+2. Register and create an account on the app, which will prompt you to provide basic details such as name and email address.
+
+3. After registration, you will be directed to the Home screen, which displays different options for gift customization and recommendations.
+
+4. Choose your preferred mode of interaction with the chatbot-powered mobile app - you can type in your queries.
+
+5. The app will prompt you to provide information about the recipient, such as their age, gender, interests, hobbies, and occasion for the gift.
+
+6. Based on the information provided, the app will generate personalized and relevant gift recommendations that are tailored to the recipient's preferences.
+
+7. You can customize gifts by selecting different colors, sizes, or items that suit your preferences.
+
+8. Once you have selected the final gift, you can check out and make payments directly within the app.
+
+9. You will receive a confirmation of your order.
+
+
+**Note: The AI-powered chatbot will continue to learn and improve its recommendations based on your feedback and interaction with the app. The more you use the app, the more accurate and customized the recommendations become.
+
+
+*** Please note that in order to application run perfectly, you have to install the chatbot application seperatly (Because the newer version, this app might not be run perfectly).
